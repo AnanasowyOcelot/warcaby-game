@@ -49,8 +49,13 @@ var refreshGameArea = function(){
 var clickFunction = function(position){
     return function(){
         if(typeof (nextMove[0]) == 'undefined' ){
-            nextMove.push({x:position.x, y:position.y, value:position.value})
+
+            nextMove.push({x:position.x, y:position.y, value:position.value});
+                $('#button').removeClass('red');
+                $(this).addClass('red');
+
         }else if(typeof (nextMove[0]) != 'undefined' && typeof (nextMove[1]) == 'undefined'){
+
             nextMove.push({x:position.x, y:position.y, value:position.value});
             console.log(nextMove);
             $.ajax({
@@ -73,6 +78,19 @@ var clickFunction = function(position){
     };
 };
 
+var addResetButton = function(){
+    var $input = $('<input type="button" class="ResetButton" value="Reset Area" />')
+        .click(function(){
+            $.ajax({
+                type: "POST",
+                url: "newAreaBuilder.php"
+            });
+            createArea();
+            refreshGameArea();
+        });
+    $input.appendTo($("#otoczenie"));
+};
+
 var nextTura = function () {
     if (tura == 0) {
         return 1
@@ -81,9 +99,20 @@ var nextTura = function () {
     }
 };
 
-
-
+setInterval(function(){
+    $.ajax({
+        type: "GET",
+        url: 'getDatabaseInfo.php',
+        success: function(data){
+            area = data;
+            refreshGameArea();
+            console.log("synchronizacja z bazą danych")
+        },
+        dataType: 'json'
+    })
+}, 5000);
 
 
 createArea();
-drawGameArea()
+drawGameArea();
+addResetButton();
