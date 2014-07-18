@@ -13,9 +13,9 @@ $area = [[[],[],[],[],[],[],[],[]],
 $createArea = function ($area) {
     for ($rowNum = 0; $rowNum <= 7; $rowNum++) {
         for ($cellNum = 0; $cellNum <= 7; $cellNum++) {
-            if ($rowNum == 0 || $rowNum == 1) {
+            if (($rowNum == 0 || $rowNum == 1 || $rowNum == 2) && ((($cellNum % 2 == 1) && ($rowNum % 2 == 1))||(($cellNum % 2 == 0) && ($rowNum % 2 == 0)))) {
                 $area[$rowNum][$cellNum] = ['x' => $cellNum, 'y'=> $rowNum, 'value'=> 1];
-            } else if ($rowNum == 7 || $rowNum == 6) {
+            } else if (($rowNum == 7 || $rowNum == 6 || $rowNum == 5)  && ((($cellNum % 2 == 1) && ($rowNum % 2 == 1))||(($cellNum % 2 == 0) && ($rowNum % 2 == 0)))) {
                 $area[$rowNum][$cellNum] = ['x' => $cellNum, 'y'=> $rowNum, 'value'=> 0];
             } else {
                 $area[$rowNum][$cellNum] = ['x' => $cellNum, 'y'=> $rowNum, 'value'=> ''];
